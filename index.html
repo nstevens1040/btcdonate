@@ -8,6 +8,11 @@
         <script type="application/javascript" src="https://raw.githubusercontent.com/nstevens1040/btcdonate/main/bitcoin.js"></script>
         <script type="application/javascript" src="https://raw.githubusercontent.com/nstevens1040/btcdonate/main/qrcode.js"></script>
         <script type="text/javascript">
+            var qrcode = new QRCode("qrcode");
+
+            function makeCode (btcaddress) {    
+                qrcode.makeCode(btcaddress);
+            }
             function generate_btc_receive_address() {
                 var publicKey = "xpub661MyMwAqRbcGKRU8TCFHac5hhnBi1XCzgPLSsavqUU6KHPF3cgb8MaD176QxybFRCAMQ8xUh4ypYkaFKxvA7bvXDcqFoJQWZGKgVCEtXiP";
                 var publicKeyBytes = [];
@@ -27,26 +32,23 @@
             $(document).ready(function() {
           var root = "https://blockchain.info/";
           var buttons = $('.blockchain-btn');
-        
           buttons.find('.blockchain').hide();
           buttons.find('.stage-begin').trigger('show').show();
-        
           buttons.each(function(index) {
             var _button = $(this);
-        
             (function() {
               var button = _button;
-        
               button.click(function() {
                 //var receivers_address = $(this).data('address');
                 var receivers_address = generate_btc_receive_address();
+                makeCode(receivers_address);
                 var test = $(this).data('test');
         
                 button.find('.blockchain').hide();
         
                 button.find('.stage-loading').trigger('show').show();
         
-                button.find('.qr-code').empty();
+                button.find('.qrcode').empty();
         
                 function checkBalance() {
                   $.ajax({
@@ -111,7 +113,7 @@
         
                 button.find('.stage-ready').trigger('show').show().html(button.find('.stage-ready').html().replace('[[address]]', receivers_address));
         
-                button.find('.qr-code').html('<img style="margin:5px" height=100 width=100 src="https://raw.githubusercontent.com/nstevens1040/images/main/ghbtcqr.png">');
+                //button.find('.qrcode').html('<img style="margin:5px" height=100 width=100 src="https://raw.githubusercontent.com/nstevens1040/images/main/ghbtcqr.png">');
         
                 button.unbind();
         
@@ -127,7 +129,8 @@
         <h1 style="margin: auto; width: 70%;">Click the button below to donate bitcoin. Thank you!</h1>
         <div style="font-size:16px; margin: auto; width: 50%;" class="blockchain-btn" data-address="1ATRJXWcgYYUyw57uzkcPNu2AHskq2BGsa" data-shared="false">
             <div class="blockchain stage-begin">
-                <img width=50% height=auto src="https://raw.githubusercontent.com/nstevens1040/images/main/btc_donate_button.jpeg"/>
+                <div id="qrcode"></div>
+                <!--img width=50% height=auto src="https://raw.githubusercontent.com/nstevens1040/images/main/btc_donate_button.jpeg"/-->
             </div>
             <div class="blockchain stage-loading" style="text-align:center">
                 <img src="https://blockchain.info/Resources/loading-large.gif"/>
