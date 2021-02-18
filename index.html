@@ -128,7 +128,6 @@
         <h1 style="margin: auto; width: 70%;">Click the button below to donate bitcoin. Thank you!</h1>
         <div style="font-size:16px; margin: auto; width: 50%;" class="blockchain-btn" data-address="1ATRJXWcgYYUyw57uzkcPNu2AHskq2BGsa" data-shared="false">
             <div class="blockchain stage-begin">
-                <div id="qrcode"></div>
                 <img width=50% height=auto src="https://raw.githubusercontent.com/nstevens1040/images/main/btc_donate_button.jpeg"/>
             </div>
             <div class="blockchain stage-loading" style="text-align:center">
@@ -136,7 +135,7 @@
             </div>
             <div class="blockchain stage-ready">
                 <p align="center">Please Donate To Bitcoin Address: <b>[[address]]</b></p>
-                <p align="center" class="qrcode"></p>
+                <p align="center" class="qrcode"><div id="qrcode"></div></p>
             </div>
             <div class="blockchain stage-paid">
                 Donation of <b>[[value]] BTC</b> Received. Thank You.
