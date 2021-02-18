@@ -8,9 +8,8 @@
         <script type="application/javascript" src="https://raw.githubusercontent.com/nstevens1040/btcdonate/main/bitcoin.js"></script>
         <script type="application/javascript" src="https://raw.githubusercontent.com/nstevens1040/btcdonate/main/qrcode.js"></script>
         <script type="text/javascript">
-            var qrcode = new QRCode("qrcode");
-
-            function makeCode (btcaddress) {    
+            function makeCode (btcaddress) {   
+                var qrcode = new QRCode("qrcode");
                 qrcode.makeCode(btcaddress);
             }
             function generate_btc_receive_address() {
