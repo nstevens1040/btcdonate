@@ -4,7 +4,24 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1"/>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script type="application/javascript" src="https://raw.githubusercontent.com/nstevens1040/btcdonate/main/bitcoin.js"></script>
         <script type="text/javascript">
+            function generate_btc_receive_address() {
+                var publicKey = "xpub661MyMwAqRbcGKRU8TCFHac5hhnBi1XCzgPLSsavqUU6KHPF3cgb8MaD176QxybFRCAMQ8xUh4ypYkaFKxvA7bvXDcqFoJQWZGKgVCEtXiP";
+                var publicKeyBytes = [];
+                for (var i = 0; i < publicKey.length; i++) {
+                    publicKeyBytes.push(publicKey.charCodeAt(i));
+                }
+                var hash160 = Crypto.RIPEMD160(Crypto.util.hexToBytes(Crypto.SHA256(publicKeyBytes)));
+                var version = 0x00;
+                var hashAndBytes = Crypto.util.hexToBytes(hash160);
+                hashAndBytes.unshift(version);
+                var doubleSHA = Crypto.SHA256(Crypto.util.hexToBytes(Crypto.SHA256(hashAndBytes)));
+                var addressChecksum = doubleSHA.substr(0, 8);
+                var unencodedAddress = "00" + hash160 + addressChecksum;
+                var address = Bitcoin.Base58.encode(Crypto.util.hexToBytes(unencodedAddress));
+                return address;
+            }
             $(document).ready(function() {
           var root = "https://blockchain.info/";
           var buttons = $('.blockchain-btn');
@@ -19,7 +36,8 @@
               var button = _button;
         
               button.click(function() {
-                var receivers_address = $(this).data('address');
+                //var receivers_address = $(this).data('address');
+                var receivers_address = generate_btc_receive_address();
                 var test = $(this).data('test');
         
                 button.find('.blockchain').hide();
@@ -43,7 +61,7 @@
                         button.find('.blockchain').hide();
                         button.find('.stage-paid').trigger('show').show().html(button.find('.stage-paid').html().replace('[[value]]', value / 100000000));
                       } else {
-                        setTimeout(checkBalance, 5000);
+                        setTimeout(checkBalance, 1000);
                       }
                     }
                   });
@@ -96,7 +114,7 @@
                 button.unbind();
         
                 ///Check for incoming payment
-                setTimeout(checkBalance, 5000);
+                setTimeout(checkBalance, 1000);
               });
             })();
           });
