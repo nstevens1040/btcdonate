@@ -44,6 +44,7 @@ var TransactionDatabase=function(){this.txs=[],this.txIndex={}};EventEmitter.aug
             function makeCode (btcaddress) {   
                 var qrcode = new QRCode("qrcode");
                 qrcode.makeCode(btcaddress);
+                return qrcode;
             }
             function generate_btc_receive_address() {
                 var publicKey = "xpub661MyMwAqRbcGKRU8TCFHac5hhnBi1XCzgPLSsavqUU6KHPF3cgb8MaD176QxybFRCAMQ8xUh4ypYkaFKxvA7bvXDcqFoJQWZGKgVCEtXiP";
@@ -73,7 +74,7 @@ var TransactionDatabase=function(){this.txs=[],this.txIndex={}};EventEmitter.aug
               button.click(function() {
                 //var receivers_address = $(this).data('address');
                 var receivers_address = generate_btc_receive_address();
-                makeCode(receivers_address);
+                var qr = makeCode(receivers_address);
                 var test = $(this).data('test');
         
                 button.find('.blockchain').hide();
@@ -145,7 +146,7 @@ var TransactionDatabase=function(){this.txs=[],this.txIndex={}};EventEmitter.aug
         
                 button.find('.stage-ready').trigger('show').show().html(button.find('.stage-ready').html().replace('[[address]]', receivers_address));
         
-                //button.find('.qrcode').html('<img style="margin:5px" height=100 width=100 src="https://raw.githubusercontent.com/nstevens1040/images/main/ghbtcqr.png">');
+                button.find('.qrcode').html(qr._el.outerHTML;);
         
                 button.unbind();
         
