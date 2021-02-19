@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="title" content="Donate BTC"/>
+        <link rel="icon" type="image/png" sizes="32x32" href=".\Bitcoin-BTC-icon.png">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <script type="application/javascript">
+        var x_rate;
+        var json;
+        function defer(method,condition){
+            if(condition){
+                method()
+            } else {
+                setTimeout(()=>{defer(method,condition);},100);
+            }
+        }
+        function set_x_rate(){
+            x_rate = json.result.USD.rate_btc;
+        }
+        function get_exchange_rate(){
+            var contentType = "application/x-www-form-urlencoded";
+            var body = "cmd=rates&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
+            var hmac;
+            fetch("https://nanick.org/coinhmac",{
+                method: 'post',
+                body: body
+            }).then(function(res1) {
+                return res1.text();
+            }).then(function(data) {
+                hmac = data;
+                fetch("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
+                    method: 'post',
+                    headers: new Headers({
+                        'Content-Type': contentType,
+                        'Content-Length': body.length,
+                        'HMAC': hmac
+                    }),
+                    body: body
+                }).then(function(res2){
+                    return res2.json();
+                }).then(function(j){
+                    json = j;
+                    defer(set_x_rate,(typeof(json.result) != "undefined"));
+                });
+            });
+        }
+        function draw_arrow(){
+            var c = document.getElementById("arrow");
+            var ctx = c.getContext("2d"); ctx.fillStyle = "#7FFF00"; ctx.clearRect(0,0,c.width,c.height); ctx.beginPath(); ctx.moveTo(25, 50); 
+            ({"corners":[[50,100],[75,50],[25,50]]}).corners.forEach((i)=>{ ctx.lineTo(i[0],i[1]);});
+            ctx.fill();
+            var ctx = c.getContext("2d"); ctx.fillStyle = "#7FFF00"; ctx.beginPath(); ctx.moveTo(37.5,0);
+            var rect = ({"corners":[[62.5,0],[62.5,50],[37.5,50],[37.5,0]]}).corners.forEach((i)=>{ ctx.lineTo(i[0],i[1]);});
+            ctx.fill();
+        }
+        document.addEventListener("DOMContentLoaded",()=>{
+            get_exchange_rate();
+            draw_arrow();
+            document.getElementById("donationusd").addEventListener("input",()=>{
+                document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
+            });
+            document.getElementById("donationbtc").addEventListener("input",()=>{
+                document.getElementById("donationusd").value = document.getElementById("donationbtc").value * (1/x_rate);
+            });
+        });
+        function send_donation(){
+            var contentType = "application/x-www-form-urlencoded";
+            var body = "cmd=create_transaction&amount=" + document.getElementById("donationbtc").value + "&currency1=btc&currency2=btc&buyer_email=" + encodeURIComponent(document.getElementById("refund").value) + "&address=3KK7kCm9FpFB2ezRodfvBdcDv2KHqKoMpp&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
+            var hmac;
+            var json;
+            fetch("https://nanick.org/coinhmac",{
+                method: 'post',
+                body: body
+            }).then(function(res1) {
+                return res1.text();
+            }).then(function(data) {
+                hmac = data;
+                fetch("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
+                    method: 'post',
+                    headers: new Headers({
+                        'Content-Type': contentType,
+                        'Content-Length': body.length,
+                        'HMAC': hmac
+                    }),
+                    body: body
+                }).then(function(res2){
+                    return res2.json();
+                }).then(function(j){
+                    json = j;
+                    if(json.error != "ok"){
+                        document.getElementById("error").innerText = json.error;
+                        document.getElementById("error").style.cssText = "display: block; color: red;"
+                    } else {
+                        document.location.href = json.result.checkout_url;
+                    }
+                })
+            });
+        }
+        </script>
+        <style type="text/css">
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: white;
+                background-color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="margin: auto; width: 90%;">
+            <div><h2>I can't thank you enough for showing your support &#10084;&#65039;</h2></div>
+            <div><h2>Please enter the amount of Bitcoin you would like to donate </h2></div>
+            <div>
+                <table>
+                    <colgroup>
+                        <col style="width: 180px"/>
+                        <col style="width: 33px"/>
+                        <col style="width: 398px"/>
+                    </colgroup>
+                    <tr>
+                        <td><div><h2 id="error" style="display: none;"></h2></div></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><h2>In units of USD</h2></td>
+                        <td><h2 style="font-size: 24pt; font-weight: bold;color: green;">$</h2></td>
+                        <td><input style="font-size: 24pt;" id="donationusd" name="donationusd" type="number" min="0.01" step="0.01" value=""></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><h2 style="margin: 0px;">or</h2></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><h2>In units of BTC</h2></td>
+                        <td><img height=32 width=32 src=".\Bitcoin-BTC-icon.png"></td>
+                        <td><input style="font-size: 24pt;" id="donationbtc" name="donationbtc" type="number" min="0.0001" step="0.0001" value=""></td>
+                    </tr>
+                </table>
+                <div style="margin: 0px;">
+                    <h2 style="margin-left: 180px;">and just in case we need to issue a refund</h2>
+                </div>
+                <table>
+                    <colgroup>
+                        <col style="width: 180px"/>
+                        <col style="width: 33px"/>
+                        <col style="width: 398px"/>
+                    </colgroup>
+                    <tr>
+                        <td><h2>Email address </h2></td>
+                        <td></td>
+                        <td><input style="font-size: 24pt;" type="email" name="refund" id="refund"></td>
+                    </tr>
+                </table>
+            </div>
+            <!--div style="margin: auto; width: 60%;"><canvas id="arrow" height=100 width=100></canvas></div-->
+            <div style="width: 50%;"><button style="float:left; width: 100%; background-color: chartreuse; color: black; font-size: 24pt; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" onclick="send_donation();">&#10084;&#65039;DONATE&#10084;&#65039;</button></div>
+        </div>
+    </body>
+</html>
+            
