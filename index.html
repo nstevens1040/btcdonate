@@ -45,7 +45,7 @@
                 });
             });
         }
-        function draw_arrow(){
+        /*function draw_arrow(){
             var c = document.getElementById("arrow");
             var ctx = c.getContext("2d"); ctx.fillStyle = "#7FFF00"; ctx.clearRect(0,0,c.width,c.height); ctx.beginPath(); ctx.moveTo(25, 50); 
             ({"corners":[[50,100],[75,50],[25,50]]}).corners.forEach((i)=>{ ctx.lineTo(i[0],i[1]);});
@@ -53,10 +53,10 @@
             var ctx = c.getContext("2d"); ctx.fillStyle = "#7FFF00"; ctx.beginPath(); ctx.moveTo(37.5,0);
             var rect = ({"corners":[[62.5,0],[62.5,50],[37.5,50],[37.5,0]]}).corners.forEach((i)=>{ ctx.lineTo(i[0],i[1]);});
             ctx.fill();
-        }
+        }*/
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
-            draw_arrow();
+            //draw_arrow();
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
             });
