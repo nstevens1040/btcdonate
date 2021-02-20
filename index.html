@@ -23,7 +23,7 @@
             var contentType = "application/x-www-form-urlencoded";
             var body = "cmd=rates&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
             var hmac;
-            fetchJsonp("https://nanick.org/coinhmac",{
+            fetch("https://nanick.org/coinhmac",{
                 method: 'post',
                 body: body
             }).then(function(res1) {
@@ -73,7 +73,7 @@
                 var body = "cmd=create_transaction&amount=" + document.getElementById("donationbtc").value + "&currency1=btc&currency2=btc&buyer_email=" + encodeURIComponent(document.getElementById("refund").value) + "&address=3KK7kCm9FpFB2ezRodfvBdcDv2KHqKoMpp&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
                 var hmac;
                 var json;
-                fetchJsonp("https://nanick.org/coinhmac",{
+                fetch("https://nanick.org/coinhmac",{
                     method: 'post',
                     body: body
                 }).then(function(res1) {
