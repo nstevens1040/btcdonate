@@ -73,7 +73,6 @@
         }
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
-            defer(
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
             });
