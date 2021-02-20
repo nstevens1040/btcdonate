@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1"/>
         <script type="application/javascript">
         var i = 0;
+        var btcrate;
         document.addEventListener("DOMContentLoaded",function(){
             var c = document.getElementById("myCanvas");
             setInterval(function(){
@@ -25,7 +26,7 @@
         </script>
         <script type="application/javascript">
         var x_rate;
-        var json;
+        var btcrate;
         function defer(method,condition){
             if(condition){
                 method()
@@ -35,28 +36,19 @@
         }
         function x_rate_interval(){
             setInterval(function(){
+                btcrate = undefined;
                 get_exchange_rate();
+                set_x_rate();
             },5000);
         }
         function set_x_rate(){
-            x_rate = json.result.USD.rate_btc;
-            if(document.getElementById("container").style.display == "none"){
-                loadMain();
-                x_rate_interval();
-            }
-            document.getElementById("rate").innerText = '$' + (1 / x_rate).toFixed(2);
-            json = "";
+            defer(function(){ x_rate = 1 / brate;},(typeof(btcrate) != "undefined"));
         }
         function get_exchange_rate(){
-            var body = "cmd=rates&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
-            fetch("https://nanick.org/coinpayments",{
-                method: 'post',
-                body: body
-            }).then(function(res2){
-                return res2.json();
-            }).then(function(j){
-                json = j;
-                defer(set_x_rate,(typeof(json.result) != "undefined"));
+            fetch("https://nanick.org/btcrate").then((response)=>{
+                return response.json();
+            }).then((resolve)=>{
+                btcrate = resolve.filter((a)=>{return a.currency.match('BTC');})[0].rate;
             });
         }
         function loadMain(){
@@ -65,6 +57,7 @@
         }
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
+            set_x_rate();
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
             });
