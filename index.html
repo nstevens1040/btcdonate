@@ -37,6 +37,8 @@
             setInterval(function(){
                 btcrate = undefined;
                 get_exchange_rate();
+                document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
+                document.getElementById("donationusd").value = document.getElementById("donationbtc").value * (1/x_rate);
             },5000);
         }
         function set_x_rate(){
