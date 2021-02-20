@@ -6,6 +6,24 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/nstevens1040/btcdonate/main/Bitcoin-BTC-icon.png">
         <meta name="viewport" content="width=device-width,initial-scale=1"/>
         <script type="application/javascript">
+        var i = 0;
+        document.addEventListener("DOMContentLoaded",function(){
+            var c = document.getElementById("myCanvas");
+            setInterval(function(){
+                var w = document.scrollingElement.offsetWidth - 100;
+                c.width = w;
+                var ctx = c.getContext("2d");
+                ctx.clearRect(0,0,c.width,c.height);
+                ctx.beginPath();
+                ctx.fillStyle = "#7FFF00";
+                ctx.fillRect(i, 0, 100, 30);
+                ctx.stroke();
+                i = i + 3;
+                if(i >= w){ i = 0; };
+            },10);
+        });
+        </script>
+        <script type="application/javascript">
         var x_rate;
         var json;
         function defer(method,condition){
@@ -41,6 +59,7 @@
         }*/
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
+            defer((typeof(x_rate) != "undefined"),()=>{ document.getElementById("loading").style.display = "none"; document.getElementById("container").style.display = "block"; });
             //draw_arrow();
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
@@ -81,7 +100,15 @@
         </style>
     </head>
     <body>
-        <div style="margin: auto; width: 90%;">
+        <div id="loading">
+            <div style="margin: auto; width: 50%;">
+                <h1 style="text-align: center; text-decoration: underline;">FETCHING EXCHANGE RATES</h1>
+            </div>
+            <div>
+                <canvas id="myCanvas"></canvas>
+            </div>
+        </div>
+        <div id="container" style="margin: auto; width: 90%; display: none;">
             <div><h2>I can't thank you enough for showing your support &#10084;&#65039;</h2></div>
             <div><h2>Please enter the amount of Bitcoin you would like to donate </h2></div>
             <div>
