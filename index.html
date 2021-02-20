@@ -48,6 +48,7 @@
                 return response.json();
             }).then((resolve)=>{
                 btcrate = resolve.filter((a)=>{return a.currency.match('BTC');})[0].rate;
+                loadMain();
             });
         }
         function loadMain(){
@@ -57,6 +58,7 @@
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
             set_x_rate();
+            x_rate_interval();
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
             });
