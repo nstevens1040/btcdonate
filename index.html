@@ -48,6 +48,7 @@
                 return response.json();
             }).then((resolve)=>{
                 btcrate = resolve.filter((a)=>{return a.currency.match('BTC');})[0].rate;
+                set_x_rate();
                 loadMain();
             });
         }
