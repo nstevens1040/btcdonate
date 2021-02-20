@@ -57,9 +57,13 @@
             var rect = ({"corners":[[62.5,0],[62.5,50],[37.5,50],[37.5,0]]}).corners.forEach((i)=>{ ctx.lineTo(i[0],i[1]);});
             ctx.fill();
         }*/
+        function loadMain(){
+            document.getElementById("loading").style.display = "none"; 
+            document.getElementById("container").style.display = "block";
+        }
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
-            defer((typeof(x_rate) != "undefined"),()=>{ document.getElementById("loading").style.display = "none"; document.getElementById("container").style.display = "block"; });
+            defer((typeof(x_rate) != "undefined"),);
             //draw_arrow();
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
