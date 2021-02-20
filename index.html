@@ -63,7 +63,7 @@
         }
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
-            defer((typeof(x_rate) != "undefined"),);
+            defer(loadMain,(typeof(x_rate) != "undefined"));
             //draw_arrow();
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
