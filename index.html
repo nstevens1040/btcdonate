@@ -29,7 +29,7 @@
                 return res1.text();
             }).then(function(data) {
                 hmac = data;
-                fetch("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
+                fetch("https://nanick.org/coinpayments",{
                     method: 'post',
                     headers: new Headers({
                         'Content-Type': contentType,
@@ -79,7 +79,7 @@
                     return res1.text();
                 }).then(function(data) {
                     hmac = data;
-                    fetch("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
+                    fetch("https://nanick.org/coinpayments",{
                         method: 'post',
                         headers: new Headers({
                             'Content-Type': contentType,
