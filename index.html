@@ -36,6 +36,7 @@
         function set_x_rate(){
             x_rate = json.result.USD.rate_btc;
             loadMain();
+            document.getElementById("rate").innerText = '$' + (1 / x_rate).toFixed(2);
         }
         function get_exchange_rate(){
             var body = "cmd=rates&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
@@ -160,7 +161,20 @@
                 </table>
             </div>
             <!--div style="margin: auto; width: 60%;"><canvas id="arrow" height=100 width=100></canvas></div-->
-            <div style="width: 50%;"><button style="float:left; width: 100%; background-color: chartreuse; color: black; font-size: 24pt; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" onclick="send_donation();">&#10084;&#65039;DONATE&#10084;&#65039;</button></div>
+            <div style="width: 50%;">
+                <button style="float:left; width: 100%; background-color: chartreuse; color: black; font-size: 24pt; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" onclick="send_donation();">&#10084;&#65039;DONATE&#10084;&#65039;</button>
+                <table>
+                    <colgroup>
+                        <col style="width: 180px;"/>
+                        <col style="width: 33px;"/>
+                        <col style="width: 398px;"/>
+                    </colgroup>
+                    <tr>
+                        <td><h2>1 Bitcoin</h2></td>
+                        <td><h2 id="rate"></h2></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>
