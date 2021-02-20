@@ -35,6 +35,7 @@
         }
         function set_x_rate(){
             x_rate = json.result.USD.rate_btc;
+            loadMain();
         }
         function get_exchange_rate(){
             var body = "cmd=rates&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
@@ -63,7 +64,6 @@
         }
         document.addEventListener("DOMContentLoaded",()=>{
             get_exchange_rate();
-            defer(loadMain,(typeof(x_rate) != "undefined"));
             //draw_arrow();
             document.getElementById("donationusd").addEventListener("input",()=>{
                 document.getElementById("donationbtc").value = document.getElementById("donationusd").value * x_rate;
