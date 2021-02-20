@@ -19,30 +19,15 @@
             x_rate = json.result.USD.rate_btc;
         }
         function get_exchange_rate(){
-            var contentType = "application/x-www-form-urlencoded";
             var body = "cmd=rates&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
-            var hmac;
-            fetch("https://nanick.org/coinhmac",{
+            fetch("https://nanick.org/coinpayments",{
                 method: 'post',
                 body: body
-            }).then(function(res1) {
-                return res1.text();
-            }).then(function(data) {
-                hmac = data;
-                fetch("https://nanick.org/coinpayments",{
-                    method: 'post',
-                    headers: new Headers({
-                        'Content-Type': contentType,
-                        'Content-Length': body.length,
-                        'HMAC': hmac
-                    }),
-                    body: body
-                }).then(function(res2){
-                    return res2.json();
-                }).then(function(j){
-                    json = j;
-                    defer(set_x_rate,(typeof(json.result) != "undefined"));
-                });
+            }).then(function(res2){
+                return res2.json();
+            }).then(function(j){
+                json = j;
+                defer(set_x_rate,(typeof(json.result) != "undefined"));
             });
         }
         /*function draw_arrow(){
@@ -68,36 +53,21 @@
             if(!document.getElementById("donationbtc").value || document.getElementById("donationbtc").value <= 0){
                 alert("Did you forget to enter the amount of Bitcoin you'd like to donate?");
             } else {
-                var contentType = "application/x-www-form-urlencoded";
                 var body = "cmd=create_transaction&amount=" + document.getElementById("donationbtc").value + "&currency1=btc&currency2=btc&buyer_email=" + encodeURIComponent(document.getElementById("refund").value) + "&address=3KK7kCm9FpFB2ezRodfvBdcDv2KHqKoMpp&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
-                var hmac;
                 var json;
-                fetch("https://nanick.org/coinhmac",{
+                fetch("https://nanick.org/coinpayments",{
                     method: 'post',
                     body: body
-                }).then(function(res1) {
-                    return res1.text();
-                }).then(function(data) {
-                    hmac = data;
-                    fetch("https://nanick.org/coinpayments",{
-                        method: 'post',
-                        headers: new Headers({
-                            'Content-Type': contentType,
-                            'Content-Length': body.length,
-                            'HMAC': hmac
-                        }),
-                        body: body
-                    }).then(function(res2){
-                        return res2.json();
-                    }).then(function(j){
-                        json = j;
-                        if(json.error != "ok"){
-                            document.getElementById("error").innerText = json.error;
-                            document.getElementById("error").style.cssText = "display: block; color: red;"
-                        } else {
-                            document.location.href = json.result.checkout_url;
-                        }
-                    })
+                }).then(function(res2){
+                    return res2.json();
+                }).then(function(j){
+                    json = j;
+                    if(json.error != "ok"){
+                        document.getElementById("error").innerText = json.error;
+                        document.getElementById("error").style.cssText = "display: block; color: red;"
+                    } else {
+                        document.location.href = json.result.checkout_url;
+                    }
                 });
             }
         }
