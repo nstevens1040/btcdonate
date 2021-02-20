@@ -51,7 +51,7 @@
                 if(document.getElementById("container").style.display == "none"){
                     loadMain();
                 }
-                document.getElementById("rate").innerText = btcrate.toFixed(2);
+                document.getElementById("rate").innerText = parseFloat(btcrate).toFixed(2);
             });
         }
         function loadMain(){
