@@ -5,7 +5,6 @@
         <meta name="title" content="Donate BTC"/>
         <link rel="icon" type="image/png" sizes="32x32" href=".\Bitcoin-BTC-icon.png">
         <meta name="viewport" content="width=device-width,initial-scale=1"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch-jsonp/1.0.6/fetch-jsonp.min.js"></script>
         <script type="application/javascript">
         var x_rate;
         var json;
@@ -30,7 +29,7 @@
                 return res1.text();
             }).then(function(data) {
                 hmac = data;
-                fetchJsonp("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
+                fetch("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
                     method: 'post',
                     headers: new Headers({
                         'Content-Type': contentType,
@@ -80,7 +79,7 @@
                     return res1.text();
                 }).then(function(data) {
                     hmac = data;
-                    fetchJsonp("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
+                    fetch("https://cors-anywhere.herokuapp.com/https://www.coinpayments.net/api.php",{
                         method: 'post',
                         headers: new Headers({
                             'Content-Type': contentType,
