@@ -37,7 +37,6 @@
             setInterval(function(){
                 btcrate = undefined;
                 get_exchange_rate();
-                set_x_rate();
             },5000);
         }
         function set_x_rate(){
@@ -49,7 +48,10 @@
             }).then((resolve)=>{
                 btcrate = resolve.filter((a)=>{return a.currency.match('BTC');})[0].rate;
                 set_x_rate();
-                loadMain();
+                if(document.getElementById("container").style.display == "none"){
+                    loadMain();
+                }
+                document.getElementById("rate").innerText = btcrate.toFixed(2);
             });
         }
         function loadMain(){
