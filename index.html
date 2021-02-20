@@ -41,7 +41,7 @@
             },5000);
         }
         function set_x_rate(){
-            defer(function(){ x_rate = 1 / brate;},(typeof(btcrate) != "undefined"));
+            defer(function(){ x_rate = 1 / btcrate;},(typeof(btcrate) != "undefined"));
         }
         function get_exchange_rate(){
             fetch("https://nanick.org/btcrate").then((response)=>{
