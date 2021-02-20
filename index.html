@@ -45,6 +45,7 @@
                 x_rate_interval();
             }
             document.getElementById("rate").innerText = '$' + (1 / x_rate).toFixed(2);
+            json = "";
         }
         function get_exchange_rate(){
             var body = "cmd=rates&version=1&key=e4020c71e1b7fcd2b62415f1dd828e343c93669b331b194987cbe889e79bc11b&format=json";
@@ -58,15 +59,6 @@
                 defer(set_x_rate,(typeof(json.result) != "undefined"));
             });
         }
-        /*function draw_arrow(){
-            var c = document.getElementById("arrow");
-            var ctx = c.getContext("2d"); ctx.fillStyle = "#7FFF00"; ctx.clearRect(0,0,c.width,c.height); ctx.beginPath(); ctx.moveTo(25, 50); 
-            ({"corners":[[50,100],[75,50],[25,50]]}).corners.forEach((i)=>{ ctx.lineTo(i[0],i[1]);});
-            ctx.fill();
-            var ctx = c.getContext("2d"); ctx.fillStyle = "#7FFF00"; ctx.beginPath(); ctx.moveTo(37.5,0);
-            var rect = ({"corners":[[62.5,0],[62.5,50],[37.5,50],[37.5,0]]}).corners.forEach((i)=>{ ctx.lineTo(i[0],i[1]);});
-            ctx.fill();
-        }*/
         function loadMain(){
             document.getElementById("loading").style.display = "none"; 
             document.getElementById("container").style.display = "block";
