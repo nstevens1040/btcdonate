@@ -5,7 +5,6 @@ The actual github-pages website is here --> [https://nstevens1040.github.io/btcd
 
 The webpage calls api endpoints /ticker /q/getreceivedbyaddress hosted on [https://blockchain.info](https://blockchain.info) for exchange rate retrieval and for detecting a change in my Bitcoin balance, respectively.  
 
-API calls are handled by my webserver. This amounts to retrieving the exchange rate as well as the donate button callback that sets up the transaction and returns the link to [blockchain.info](coinpayments.com)  
 ## Features
    - The exchange rate is live and updates every 5 seconds.  
    - Typing a Bitcoin amount automatically calculates the dollar amount.  
