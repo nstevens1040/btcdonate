@@ -11,3 +11,4 @@ My P2SH Bitcoin receiving address is hard coded into the webpage.
    - The exchange rate is live and updates every 5 seconds.  
    - Typing a Bitcoin amount automatically calculates the dollar amount.  
    - Typing in a dollar amount automatically calculates the Bitcoin amount.  
+  
