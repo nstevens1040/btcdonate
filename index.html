@@ -28,7 +28,7 @@
             function copyToClipboard(id){
                 var ta = document.createElement("textarea");
                 ta.id = "neek";
-                ta.style.cssText = "height: 0; position: absolute; z-index: -1; top: " + document.scrollingElement.scrollHeight + ';';
+                ta.style.cssText = "opacity: .01; height: 0; position: absolute; z-index: -1; top: " + document.scrollingElement.scrollHeight + ';';
                 ta.value = document.getElementById(id).innerText;
                 document.body.appendChild(ta);
                 document.getElementById("neek").select();
